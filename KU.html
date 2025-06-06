@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+
+      font-family: Arial, sans-serif;
+      margin: 0
+    }
+
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #00bcd4;
+      padding: 10px 20px;
+      width: 100%;
+      position: relative;
+
+
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-left img {
+      height: 50px;
+      margin-right: 20px;
+    }
+
+    .nav-left a,
+    .dropdown-btn {
+      margin-right: 20px;
+      text-decoration: none;
+      color: black;
+      font-size: 16px;
+      position: relative;
+      padding: 15px;
+    }
+
+    .nav-left a:hover,
+    .dropdown:hover .dropdown-btn {
+      color: #0022ff;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 180px;
+      border-radius: 4px;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .icon,
+    .profile {
+      margin-left: 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .profile {
+      width: 40px;
+      height: 40px;
+      border-radius: 75%;
+      background-color: #eee;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .middle {
+      display: flex;
+      gap: 10px;
+      padding: 15px 20px;
+    }
+
+    .middle input {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      margin-left: 85px;
+
+    }
+
+    .middle button {
+      padding: 10px 20px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .middle button:hover {
+      background-color: #c6c2c2;
+    }
+
+
+
+    .card-container {
+      padding: 40px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      width: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card-header {
+      height: 120px;
+    }
+
+    .header-pink {
+      background: #feaaaa;
+    }
+
+    .header-yellow {
+      background: #bdda83;
+    }
+
+    .header-blue {
+      background-color: #66999a;
+    }
+
+    .header-green {
+      background-color: rgb(58, 115, 58);
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .semester {
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="navbar">
+    <div class="nav-left">
+      <img class="image" src="fegurnno.png">
+      <a href="#">Home</a>
+      <a href="#">Dashboard</a>
+      <div class="dropdown">
+        <span class="dropdown-btn">Tracker </span>
+        <div class="dropdown-content">
+          <a href="#">Attendance</a>
+          <a href="#">Presentation</a>
+          <a href="#">Assignment</a>
+          <a href="#">Exam Performance</a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="nav-right">
+      <span class="icon">🔔</span>
+
+      <div class="profile">SRG</div>
+    </div>
+  </div>
+
+  <div class="middle">
+    <input type="text" placeholder="search">
+    <button>sort by course name</button>
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <div class="card-header header-pink"></div>
+      <div class="card-body">
+        <div class="semester">Semester I</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header header-yellow"></div>
+      <div class="card-body">
+        <div class="semester">Semester II</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header header-blue"></div>
+      <div class="card-body">
+        <div class="semester">Semester III</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header header-green"></div>
+      <div class="card-body">
+        <div class="semester">Semester IV</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

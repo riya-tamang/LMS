@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registration Form</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0b0f1a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-box {
+      background-color: #121829;
+      padding: 30px 25px;
+      border-radius: 15px;
+      width: 340px;
+      box-shadow: 0 0 25px #feaaaa, 0 0 40px #feaaaa;
+      border: 2px solid #feaaaa;
+    }
+
+    form h2 {
+      text-align: center;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    label {
+      color: white;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1e2235;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      box-shadow: inset 0 0 5px #222;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      box-shadow: 0 0 6px #feaaaa, 0 0 10px #feaaaa;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: white;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #feaaaa;
+      border: none;
+      border-radius: 8px;
+      color: #1e2235;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #feaaaa;
+      transform: scale(1.03);
+      box-shadow: 0 0 12px #feaaaa;
+    }
+
+    .error {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin-top: -12px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-box">
+    <form id="registrationForm" onsubmit="return validateForm()">
+      <h2>Register</h2>
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="gmail">Gmail</label>
+      <input 
+        type="email" 
+        id="gmail" 
+        name="gmail" 
+        required 
+        placeholder="example@gmail.com"
+      />
+      <div id="gmailError" class="error"></div>
+
+      <label for="password">Password</label>
+      <div class="password-container">
+        <input type="password" id="password" name="password" required />
+        <span class="toggle-password" onclick="togglePassword()">👁</span>
+      </div>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <div class="password-container">
+        <input type="password" id="confirmPassword" name="confirmPassword" required />
+        <span class="toggle-password" onclick="toggleConfirmPassword()">👁</span>
+      </div>
+
+      <div id="error" class="error"></div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const input = document.getElementById("password");
+      const icon = input.nextElementSibling;
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "👁‍🗨";
+      } else {
+        input.type = "password";
+        icon.textContent = "👁";
+      }
+    }
+
+    function toggleConfirmPassword() {
+      const input = document.getElementById("confirmPassword");
+      const icon = input.nextElementSibling;
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "👁‍🗨";
+      } else {
+        input.type = "password";
+        icon.textContent = "👁";
+      }
+    }
+
+    function validateForm() {
+      const gmail = document.getElementById("gmail").value.trim();
+      const gmailErrorDiv = document.getElementById("gmailError");
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const errorDiv = document.getElementById("error");
+
+      // Gmail validation: check for valid gmail format
+      const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      if (!gmailRegex.test(gmail)) {
+        gmailErrorDiv.textContent = "Please enter a valid Gmail address (e.g., example@gmail.com).";
+        return false;
+      } else {
+        gmailErrorDiv.textContent = "";
+      }
+
+      // Password confirmation validation
+      if (password !== confirmPassword) {
+        errorDiv.textContent = "Password and confirmation do not match.";
+        return false;
+      } else {
+        errorDiv.textContent = "";
+      }
+
+      // All validations passed
+      return true;
+    }
+  </script>
+</body>
+</html>
