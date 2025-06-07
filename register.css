@@ -1,0 +1,99 @@
+ body{
+ margin: 0;
+      padding: 0;
+      background-color: #0b0f1a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-box {
+      background-color: #121829;
+      padding: 30px 25px;
+      border-radius: 15px;
+      width: 340px;
+      box-shadow: 0 0 25px #feaaaa, 0 0 40px #feaaaa;
+      border: 2px solid #feaaaa;
+    }
+
+    form h2 {
+      text-align: center;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    label {
+      color: white;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1e2235;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      box-shadow: inset 0 0 5px #222;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      box-shadow: 0 0 6px #feaaaa, 0 0 10px #feaaaa;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: white;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #feaaaa;
+      border: none;
+      border-radius: 8px;
+      color: #1e2235;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #feaaaa;
+      transform: scale(1.03);
+      box-shadow: 0 0 12px #feaaaa;
+    }
+
+    .error {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin-top: -12px;
+      margin-bottom: 10px;
+    }
+    #semcontent>span{
+        display: flex;
+        gap: 4PX;
+    }
+    #semcontent>span>label{
+        margin-top: 5px;
+    }
