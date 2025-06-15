@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>File Type Cards</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .container, .upload-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 220px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card img {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #333333;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #666666;
+      margin-bottom: 15px;
+    }
+
+    .card a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .card a:hover {
+      color: #0056b3;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .card.pdf { border-top: 4px solid #feaaaa; }
+    .card.word { border-top: 4px solid #66999a; }
+    .card.image { border-top: 4px solid #bdda83; }
+    .card.video { border-top: 4px solid #e8dff5; }
+
+    .upload-section {
+      display: none;
+      flex-direction: column;
+      background-color: #ffffff;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+    }
+
+    .upload-section h2 {
+      margin-bottom: 20px;
+    }
+
+    .upload-section input[type="file"] {
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      color: #007BFF;
+      text-decoration: none;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .back-btn:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="container" id="cardSection">
+    <div class="card pdf">
+      <img src="https://img.icons8.com/color/96/000000/pdf.png" alt="PDF Icon" />
+      <h3>PDF Document</h3>
+      <p>Download or upload the PDF file.</p>
+      <a href="#" onclick="showUpload('PDF')">Upload PDF</a>
+    </div>
+    <div class="card word">
+      <img src="https://img.icons8.com/color/96/000000/ms-word.png" alt="Word Icon" />
+      <h3>Word Document</h3>
+      <p>Download or upload the Word document.</p>
+      <a href="#" onclick="showUpload('Word')">Upload Word</a>
+    </div>
+    <div class="card image">
+      <img src="https://img.icons8.com/color/96/000000/image.png" alt="Image Icon" />
+      <h3>Image File</h3>
+      <p>Upload or download the image.</p>
+      <a href="#" onclick="showUpload('Image')">Upload Image</a>
+    </div>
+    <div class="card video">
+      <img src="https://img.icons8.com/color/96/000000/video.png" alt="Video Icon" />
+      <h3>Video File</h3>
+      <p>Upload or download the video.</p>
+      <a href="#" onclick="showUpload('Video')">Upload Video</a>
+    </div>
+  </div>
+
+
+  <div class="upload-section" id="uploadSection">
+    <h2 id="uploadTitle">Upload File</h2>
+    <input type="file" />
+    <a href="#" class="back-btn" onclick="goBack()">← Back to Home</a>
+  </div>
+
+ 
+  <script>
+    function showUpload(fileType) {
+      document.getElementById('cardSection').style.display = 'none';
+      document.getElementById('uploadSection').style.display = 'flex';
+      document.getElementById('uploadTitle').innerText = `Upload ${fileType} File`;
+    }
+
+    function goBack() {
+      document.getElementById('cardSection').style.display = 'flex';
+      document.getElementById('uploadSection').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
