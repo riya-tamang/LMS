@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LMS - Single Page with Form</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+    }
+
+    nav {
+      background-color: #e24a7d;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+
+    .nav-links a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .actions {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .dropdown-container {
+      display: inline-block;
+      position: relative;
+      margin: 10px;
+    }
+
+    .dropdown-button {
+      background-color: #935673;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .dropdown-button:hover {
+      background-color: #7f6868;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #ccc9a4;
+      min-width: 200px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .dropdown-content a:hover {
+      text-decoration: underline;
+    }
+
+    .dropdown-container:hover .dropdown-content {
+      display: block;
+    }
+
+    .plain-button {
+      background-color: #c8a353;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    .plain-button:hover {
+      background-color: #b59e7d;
+    }
+
+    /* Form container hidden initially */
+    #form-page {
+      display: none;
+      padding: 30px;
+      margin: 50px auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+    }
+
+    .save-button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #005eff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .save-button:hover {
+      background-color: #ee85bd;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .back-button button {
+      background-color: #777;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .back-button button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Page -->
+  <div id="main-page">
+    <nav>
+      <div class="logo"><strong>LMS</strong></div>
+      <div class="nav-links">
+        <a href="#">About Instructor</a>
+        <a href="#">About Course</a>
+      </div>
+    </nav>
+
+    <div class="actions">
+      <div class="dropdown-container">
+        <button class="dropdown-button">Add About</button>
+        <div class="dropdown-content">
+          <a onclick="showForm('instructor')">Add About Instructor</a>
+          <a onclick="showForm('course')">Add About Course</a>
+        </div>
+      </div>
+
+      <button class="plain-button">Add Content</button>
+    </div>
+  </div>
+
+  <!-- Form Page (hidden initially) -->
+  <div id="form-page">
+    <form id="aboutForm">
+      <div class="form-group" id="instructor-group">
+        <label for="instruction">About Instructor</label>
+        <textarea id="instruction" placeholder="Enter instructions..."></textarea>
+      </div>
+
+      <div class="form-group" id="course-group">
+        <label for="aboutCourse">About Course</label>
+        <textarea id="aboutCourse" placeholder="Describe the course..."></textarea>
+      </div>
+
+      <button type="submit" class="save-button">Save</button>
+    </form>
+
+    <div class="back-button">
+      <button onclick="goBack()">← Back to Home</button>
+    </div>
+  </div>
+
+  <script>
+    function showForm(type) {
+      // Hide main page
+      document.getElementById('main-page').style.display = 'none';
+      // Show form page
+      document.getElementById('form-page').style.display = 'block';
+
+      // Reset textareas
+      document.getElementById('instruction').value = '';
+      document.getElementById('aboutCourse').value = '';
+
+      // Show or hide form groups depending on type
+      if (type === 'instructor') {
+        document.getElementById('instructor-group').style.display = 'block';
+        document.getElementById('course-group').style.display = 'none';
+      } else if (type === 'course') {
+        document.getElementById('instructor-group').style.display = 'none';
+        document.getElementById('course-group').style.display = 'block';
+      }
+      window.scrollTo(0, 0);
+    }
+
+    function goBack() {
+      // Hide form page
+      document.getElementById('form-page').style.display = 'none';
+      // Show main page
+      document.getElementById('main-page').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    // Optional: handle form submit
+    document.getElementById('aboutForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      alert('Saved successfully!');
+      goBack();
+    });
+  </script>
+
+</body>
+</html>
