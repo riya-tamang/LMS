@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LMS - Add About</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef2f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #d94f79;
+      padding: 1em;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .main {
+      text-align: center;
+      padding: 3em;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .button {
+      padding: 0.7em 1.5em;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-about {
+      background-color: #874f64;
+      color: white;
+    }
+
+    .btn-content {
+      background-color: #c8a34d;
+      color: white;
+    }
+
+    .btn-upload {
+      background-color: #4d8ac8;
+      color: white;
+      margin-left: 110px;
+      
+    }
+
+    .breadcrumb {
+      margin: 1em auto;
+      text-align: center;
+    }
+
+    .breadcrumb span {
+      margin: 0 5px;
+    }
+
+    .section {
+      display: none;
+      max-width: 600px;
+      margin: auto;
+      text-align: left;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 1em;
+      padding: 10px;
+    }
+
+    .back-btn, .close-btn {
+      background-color: #999;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .save-msg {
+      color: green;
+      font-size: 14px;
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+   
+    .upload-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .upload-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+      max-width: 800px;
+      width: 90%;
+      position: relative;
+    }
+
+    .upload-container .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .container, .upload-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 200px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card img {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #333333;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #666666;
+      margin-bottom: 15px;
+    }
+
+    .card a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .card a:hover {
+      color: #0056b3;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .card.pdf { border-top: 4px solid #feaaaa; }
+    .card.word { border-top: 4px solid #66999a; }
+    .card.image { border-top: 4px solid #bdda83; }
+    .card.video { border-top: 4px solid #e8dff5; }
+
+    .upload-section {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      padding-top: 20px;
+    }
+
+    .upload-section h2 {
+      margin-bottom: 20px;
+    }
+
+    .upload-section input[type="file"] {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div>LMS</div>
+    <div class="nav-links">
+      <a href="#">About Instructor</a>
+      <a href="#">About Course</a>
+    </div>
+  </div>
+
+  <div class="main" id="mainButtons">
+    <button class="button btn-about" onclick="showBreadcrumb()">Add About</button>
+    <div class="btn-group">
+      <button class="button btn-content">Add Content</button>
+      <button class="button btn-upload" onclick="showUploadModal()">Upload</button>
+    </div>
+  </div>
+
+  <div class="breadcrumb" id="breadcrumb" style="display: none;">
+    <button class="button" onclick="showSection('instructor')">Add About Instructor</button>
+    <span> | </span>
+    <button class="button" onclick="showSection('course')">Add About Course</button>
+  </div>
+
+  <div class="section" id="instructorSection">
+    <h2>Add About Instructor</h2>
+    <textarea id="instructorText" placeholder="Write about the instructor..."></textarea>
+    <button class="button btn-content" onclick="saveContent('instructor')">Save</button>
+    <p class="save-msg" id="instructorSaveMsg"></p>
+    <br>
+    <button class="back-btn" onclick="goHome()">Back to Home</button>
+  </div>
+
+  <div class="section" id="courseSection">
+    <h2>Add About Course</h2>
+    <textarea id="courseText" placeholder="Write about the course..."></textarea>
+    <button class="button btn-content" onclick="saveContent('course')">Save</button>
+    <p class="save-msg" id="courseSaveMsg"></p>
+    <br>
+    <button class="back-btn" onclick="goHome()">Back to Home</button>
+  </div>
+
+  <!-- Upload Modal -->
+  <div class="upload-modal" id="uploadModal">
+    <div class="upload-container">
+      <span class="close" onclick="closeUploadModal()">×</span>
+
+      <div class="container" id="cardSection">
+        <div class="card pdf">
+          <img src="https://img.icons8.com/color/96/000000/pdf.png" alt="PDF Icon" />
+          <h3>PDF Document</h3>
+          <p>Download or upload the PDF file.</p>
+          <a href="#" onclick="showUpload('PDF')">Upload PDF</a>
+        </div>
+
+        <div class="card word">
+          <img src="https://img.icons8.com/color/96/000000/ms-word.png" alt="Word Icon" />
+          <h3>Word Document</h3>
+          <p>Download or upload the Word document.</p>
+          <a href="#" onclick="showUpload('Word')">Upload Word</a>
+        </div>
+
+        <div class="card image">
+          <img src="https://img.icons8.com/color/96/000000/image.png" alt="Image Icon" />
+          <h3>Image File</h3>
+          <p>Upload or download the image.</p>
+          <a href="#" onclick="showUpload('Image')">Upload Image</a>
+        </div>
+
+        <div class="card video">
+          <img src="https://img.icons8.com/color/96/000000/video.png" alt="Video Icon" />
+          <h3>Video File</h3>
+          <p>Upload or download the video.</p>
+          <a href="#" onclick="showUpload('Video')">Upload Video</a>
+        </div>
+      </div>
+
+      <div class="upload-section" id="uploadSection">
+        <h2 id="uploadTitle">Upload File</h2>
+        <input type="file" />
+        <button class="back-btn" onclick="goBack()">← Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showBreadcrumb() {
+      document.getElementById('mainButtons').style.display = 'none';
+      document.getElementById('breadcrumb').style.display = 'block';
+    }
+
+    function showSection(section) {
+      document.getElementById('breadcrumb').style.display = 'none';
+      document.getElementById(section + 'Section').style.display = 'block';
+    }
+
+    function goHome() {
+      document.getElementById('instructorSection').style.display = 'none';
+      document.getElementById('courseSection').style.display = 'none';
+      document.getElementById('mainButtons').style.display = 'flex';
+    }
+
+    function saveContent(type) {
+      const textarea = document.getElementById(type + 'Text');
+      const msg = document.getElementById(type + 'SaveMsg');
+      const content = textarea.value.trim();
+
+      if (content) {
+        localStorage.setItem(type + 'About', content);
+        msg.textContent = "Saved successfully!";
+      } else {
+        msg.textContent = "Please write something before saving.";
+      }
+
+      setTimeout(() => msg.textContent = '', 3000);
+    }
+
+    function showUploadModal() {
+      document.getElementById('uploadModal').style.display = 'flex';
+      document.getElementById('cardSection').style.display = 'flex';
+      document.getElementById('uploadSection').style.display = 'none';
+    }
+
+    function closeUploadModal() {
+      document.getElementById('uploadModal').style.display = 'none';
+    }
+
+    function showUpload(fileType) {
+      document.getElementById('cardSection').style.display = 'none';
+      document.getElementById('uploadSection').style.display = 'flex';
+      document.getElementById('uploadTitle').innerText = `Upload ${fileType} File`;
+    }
+
+    function goBack() {
+      document.getElementById('cardSection').style.display = 'flex';
+      document.getElementById('uploadSection').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
