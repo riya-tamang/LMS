@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>File Upload with Submission Status</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f0f0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      width: 140px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img { width: 48px; height: 48px; margin-bottom: 10px; }
+    .card h3 { font-size: 14px; }
+
+    .upload-section {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      min-width: 400px;
+      gap: 15px;
+    }
+
+    h2 {
+      align-self: center;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .custom-file-label {
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    input[type="file"] { display: none; }
+
+    button {
+      padding: 8px 15px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #uploadBtn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .grey-btn {
+      background-color: #d3d3d3;
+      color: #333;
+      margin-right: 10px;
+    }
+
+    table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  border: 2px solid #999;
+}
+
+td {
+  padding: 8px;
+  border: 1px solid #999;
+  font-size: 14px;
+}
+
+td:first-child {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+
+    .comment-box {
+      width: 100%;
+      min-height: 50px;
+      border-radius: 5px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+
+    #fileNameText {
+      font-size: 13px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  
+  <div class="container" id="cardContainer">
+    <div class="card" data-type="PDF File">
+      <img src="https://img.icons8.com/color/96/pdf.png" />
+      <h3>Upload PDF</h3>
+    </div>
+    <div class="card" data-type="Word Document">
+      <img src="https://img.icons8.com/color/96/ms-word.png" />
+      <h3>Upload Word</h3>
+    </div>
+    <div class="card" data-type="Image File">
+      <img src="https://img.icons8.com/color/96/image.png" />
+      <h3>Upload Image</h3>
+    </div>
+    <div class="card" data-type="Video File">
+      <img src="https://img.icons8.com/color/96/video.png" />
+      <h3>Upload Video</h3>
+    </div>
+  </div>
+
+  <!-- Upload Section -->
+  <div class="upload-section" id="uploadSection">
+    <h2 id="uploadTitle">Upload a File</h2>
+
+    <label for="assignmentTitle">Assignment Title</label>
+    <input type="text" id="assignmentTitle" placeholder="Enter your assignment title" />
+
+    <label for="fileInput" class="custom-file-label">Choose File</label>
+    <input type="file" id="fileInput" />
+    <span id="fileNameText"></span>
+
+    <div>
+      <button id="uploadBtn">Upload</button>
+      <button class="grey-btn" id="editBtn">Edit Submission</button>
+      <button class="grey-btn" id="removeBtn">Remove Submission</button>
+    </div>
+
+    <!-- Status Table -->
+    <table>
+      <tr><td><strong>Submission status:</strong></td><td id="statusVal">Not Submitted</td></tr>
+      <tr><td><strong>Grading status:</strong></td><td id="gradeVal">Pending</td></tr>
+      <tr><td><strong>Time remaining:</strong></td><td id="timeVal"></td></tr>
+      <tr><td><strong>Last modified:</strong></td><td id="modifiedVal">--</td></tr>
+      <tr><td><strong>Submission comment:</strong></td><td><textarea class="comment-box" placeholder="Add a comment..."></textarea></td></tr>
+    </table>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    const cardContainer = document.getElementById('cardContainer');
+    const uploadSection = document.getElementById('uploadSection');
+    const uploadTitle = document.getElementById('uploadTitle');
+    const fileInput = document.getElementById('fileInput');
+    const fileNameText = document.getElementById('fileNameText');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const removeBtn = document.getElementById('removeBtn');
+    const editBtn = document.getElementById('editBtn');
+    const assignmentTitle = document.getElementById('assignmentTitle');
+    const statusVal = document.getElementById('statusVal');
+    const modifiedVal = document.getElementById('modifiedVal');
+
+    let currentCategory = 'Unknown';
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        currentCategory = card.getAttribute('data-type');
+        uploadTitle.textContent = `Upload a ${currentCategory}`;
+        cardContainer.style.display = 'none';
+        uploadSection.style.display = 'flex';
+      });
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        fileNameText.textContent = `Selected: ${fileInput.files[0].name}`;
+      }
+    });
+
+    uploadBtn.addEventListener('click', () => {
+      const file = fileInput.files[0];
+      if (file && assignmentTitle.value.trim() !== '') {
+        const now = new Date();
+        statusVal.textContent = 'Submitted';
+        modifiedVal.textContent = now.toLocaleString();
+        alert('File uploaded successfully!');
+      } else {
+        alert('Please enter title and select a file.');
+      }
+    });
+
+    removeBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      fileNameText.textContent = '';
+      assignmentTitle.value = '';
+      statusVal.textContent = 'Not Submitted';
+      modifiedVal.textContent = '--';
+    });
+
+    editBtn.addEventListener('click', () => {
+      alert('You can now update your assignment or file.');
+    });
+  </script>
+
+</body>
+</html>
